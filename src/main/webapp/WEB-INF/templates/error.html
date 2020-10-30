@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base::layout(~{::div}, ~{::script})">
+
+<div class="container flex-fill">
+    <h4 th:text="#{error.heading(${#response.status})}">Heading</h4>
+    <hr>
+    <div class="row">
+        <div class="col-md-8 col-lg-6 mx-auto">
+            <div class="card text-danger border-primary">
+                <div class="card-body">
+                    <h4 class="card-title" th:text="#{error.title}">Title</h4>
+                    <p class="card-text" th:text="#{error.message}">Text</p>
+                </div>
+                <div class="card-footer text-center">
+                    <a th:href="@{/}" th:text="#{error.home}">Link</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>

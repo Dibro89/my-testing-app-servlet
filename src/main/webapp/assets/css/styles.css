@@ -1,0 +1,49 @@
+html, body {
+  height: 100%;
+}
+
+@media (min-width:1200px) {
+  .container, .container-lg, .container-md, .container-sm, .container-xl {
+    max-width: 960px;
+  }
+}
+
+body > .container {
+  margin-top: 1.25rem;
+  margin-bottom: 1.25rem;
+}
+
+body > .container > hr {
+  background: #aaaaaa;
+  width: 100%;
+}
+
+footer > div {
+  padding: 2rem;
+  background: #282d32;
+}
+
+footer > div > p {
+  margin-bottom: 0;
+}
+
+.language-box a {
+  color: #8eb4f0;
+}
+
+.language-box a.disabled {
+  color: #ffffff;
+  pointer-events: none;
+  cursor: default;
+}
+
+.user-information th {
+  width: 1%;
+  white-space: nowrap;
+  text-align: right;
+}
+
+a:hover {
+  text-decoration: none;
+}
+

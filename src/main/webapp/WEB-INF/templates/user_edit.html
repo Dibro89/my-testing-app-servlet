@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base::layout(~{::div}, ~{::script})">
+
+<div class="container flex-fill">
+    <h4 th:text="#{${targetUser} ? 'base.edit-information' : 'base.sign-up'}">Heading</h4>
+    <hr>
+    <form method="POST">
+        <div class="row">
+            <div class="col-md-6 col-lg-4 mx-auto">
+                <div class="alert alert-danger" role="alert" th:if="${errors}">
+                    <div th:each="error : ${new String[]{'username', 'password', 'displayName', 'username.exists'}}"
+                         th:if="${#lists.contains(errors, error)}"
+                         th:text="#{|user-edit.error.${error}|}">
+                        Alert
+                    </div>
+                </div>
+                <div class="form-group" th:unless="${targetUser}">
+                    <label for="username" class="sr-only" th:text="#{base.username}">Label</label>
+                    <input id="username" name="username" class="form-control form-control-sm" type="text" th:placeholder="#{base.username}" th:value="${form.username}" autofocus="" required="">
+                </div>
+                <div class="form-group">
+                    <label for="display-name" class="sr-only" th:text="#{base.display-name}">Label</label>
+                    <input id="display-name" name="displayName" class="form-control form-control-sm" type="text" th:placeholder="#{base.display-name}" th:value="${form.displayName}" required="">
+                </div>
+                <div class="form-group">
+                    <label for="password" class="sr-only" th:text="#{base.password}">Label</label>
+                    <input id="password" name="password" class="form-control form-control-sm" type="password" th:placeholder="#{base.password}" required="">
+                </div>
+                <div class="form-group">
+                    <label for="repeat-password" class="sr-only" th:text="#{user-edit.repeat-password}">Label</label>
+                    <input id="repeat-password" class="form-control form-control-sm" type="password" th:placeholder="#{user-edit.repeat-password}" required="">
+                </div>
+                <div class="form-group" th:if="${targetUser} and ${user.admin}">
+                    <div class="custom-control custom-switch">
+                        <input class="custom-control-input" type="checkbox" id="is-admin" name="is-admin" th:checked="${targetUser.admin}">
+                        <label class="custom-control-label" for="is-admin" th:text="#{user-edit.is-admin}">Label</label>
+                    </div>
+                </div>
+                <button class="btn btn-primary btn-sm float-right" type="submit" th:text="#{${targetUser} ? 'base.save' : 'base.sign-up'}">Button</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+</html>

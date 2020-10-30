@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base::layout(~{::div}, ~{::script})">
+
+<div class="container flex-fill">
+    <span class="float-right">
+        <a class="btn btn-danger btn-sm" role="button" th:href="@{/users/{username}/block(username=${userInfo.username})}" th:text="#{user.block}">Button</a>
+        <a class="btn btn-secondary btn-sm" role="button" th:href="@{/users/{username}/edit(username=${userInfo.username})}" th:text="#{user.edit}">Button</a>
+    </span>
+    <h4 th:text="#{user.heading}">Heading</h4>
+    <hr>
+    <h5 th:text="#{user.information}">Heading</h5>
+    <table class="table table-sm user-information">
+        <tbody>
+        <tr th:each="entry : ${userInfo}">
+            <th th:text="#{|user.${entry.key}|}">Cell 1</th>
+            <td th:text="${entry.value}">Cell 2</td>
+        </tr>
+        </tbody>
+    </table>
+    <hr>
+    <h5 th:text="#{user.attempts}">Heading</h5>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th th:text="#{user.attempt-test}">Column 1</th>
+                <th th:text="#{user.attempt-score}">Column 2</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="attempt : ${attempts}">
+                <td th:text="${attempt.test.name}">Cell 1</td>
+                <td th:text="${attempt.score}">Cell 2</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</html>

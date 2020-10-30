@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:fragment="layout(content, scripts)">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title th:text="#{base.title}">Title</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" th:href="@{/assets/css/styles.css}">
+</head>
+
+<body class="d-flex flex-column">
+<header>
+    <nav class="navbar navbar-dark navbar-expand-md bg-dark">
+        <div class="container">
+            <a class="navbar-brand" th:text="#{base.title}" th:href="@{/}">Brand</a>
+            <button data-toggle="collapse" class="navbar-toggler" data-target="#navcol">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navcol">
+                <ul class="nav navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" th:href="@{/users}" th:text="#{base.users}">Item</a>
+                    </li>
+                    <li class="nav-item" th:if="${user}">
+                        <a class="nav-link" th:href="@{/users/{username}(username=${user.username})}" th:text="#{base.profile}">Item</a>
+                    </li>
+                </ul>
+                <th:block th:unless="${user}">
+                    <a class="text-light ml-auto" th:href="@{/login}" th:text="#{base.log-in}">Link</a>
+                    <a class="btn btn-outline-light btn-sm ml-2" role="button" th:href="@{/register}" th:text="#{base.sign-up}">Button</a>
+                </th:block>
+                <th:block th:if="${user}">
+                    <a class="text-light ml-auto" th:href="@{/logout}" th:text="#{base.log-out}">Link</a>
+                </th:block>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<div class="container flex-fill" th:replace="${content}"></div>
+
+<footer>
+    <div class="text-center text-muted">
+        <p th:text="|#{base.title} &copy; 2020|">Company Name &copy; 2020</p>
+        <p class="language-box">
+            <a th:class="${#locale.language == 'en'} ? 'disabled'" href="?lang=en">en</a>
+            <span>/</span>
+            <a th:class="${#locale.language == 'ru'} ? 'disabled'" href="?lang=ru">ru</a>
+        </p>
+    </div>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+<th:block th:replace="${scripts} ?: _"/>
+</body>
+
+</html>

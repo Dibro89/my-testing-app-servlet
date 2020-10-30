@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base::layout(~{::div}, ~{::script})">
+
+<div class="container d-flex flex-column flex-fill">
+    <h4 class="mb-0" th:text="#{home.heading}">Heading</h4>
+    <hr>
+    <h5 th:text="#{home.available-tests}">Heading</h5>
+    <form class="form-inline mb-2">
+        <label class="mr-2" for="subject" th:text="#{home.select-subject}">Label</label>
+        <select class="custom-select custom-select-sm mb-2 mb-sm-0 mr-sm-2" id="subject" name="subject">
+            <option value=""
+                    th:text="#{home.any-subject}"
+                    th:selected="${param.subject == null}">
+                This is item 1
+            </option>
+            <option th:each="subject : ${subjects}"
+                    th:value="${subject}"
+                    th:text="${subject}"
+                    th:selected="${param.subject != null and param.subject[0] == subject}">
+                This is item 2
+            </option>
+        </select>
+        <label class="mr-2" for="sort" th:text="#{home.sort-by}">Label</label>
+        <select class="custom-select custom-select-sm mb-2 mb-sm-0" id="sort" name="sort">
+            <option th:each="sort : ${sorts}"
+                    th:text="#{|home.sort.${sort}|}"
+                    th:value="${sort}"
+                    th:selected="${param.sort != null and param.sort[0] == sort}">
+                This is item 2
+            </option>
+        </select>
+        <button class="btn btn-success btn-sm ml-sm-auto" type="submit" th:text="#{home.apply}">Button</button>
+    </form>
+    <div class="table-responsive flex-fill">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th th:text="#{home.test.name}">Column 1</th>
+                <th th:text="#{home.test.subject}">Column 2</th>
+                <th th:text="#{home.test.difficulty}">Column 2</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="test : ${tests}">
+                <td><a th:href="@{/tests/{testId}(testId=${test.id})}" th:text="${test.name}">Cell 1</a></td>
+                <td th:text="${test.subject}">Cell 2</td>
+                <td th:text="${test.difficulty}">Cell 2</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</html>

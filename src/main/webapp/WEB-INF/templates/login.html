@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base::layout(~{::div}, ~{::script})">
+
+<div class="container flex-fill">
+    <h4 th:text="#{login.heading}">Heading</h4>
+    <hr>
+    <form method="POST">
+        <div class="row">
+            <div class="col-md-6 col-lg-4 mx-auto">
+                <div class="alert alert-danger" role="alert" th:if="${param.error}" th:text="#{login.error}">Alert</div>
+                <div class="alert alert-success" role="alert" th:if="${param.registered}" th:text="#{login.registered}">Alert</div>
+                <div class="form-group">
+                    <label for="username" class="sr-only" th:text="#{base.username}">Label</label>
+                    <input id="username" name="username" class="form-control form-control-sm" type="text" th:placeholder="#{base.username}" autofocus="" required="">
+                </div>
+                <div class="form-group">
+                    <label for="password" class="sr-only" th:text="#{base.password}">Label</label>
+                    <input id="password" name="password" class="form-control form-control-sm" type="password" th:placeholder="#{base.password}" required="">
+                </div>
+                <div class="form-inline">
+                    <a class="btn-sm" th:href="@{/register}" th:text="#{base.sign-up}">Link</a>
+                    <button class="btn btn-primary btn-sm ml-auto" type="submit" th:text="#{base.log-in}">Button</button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+</html>

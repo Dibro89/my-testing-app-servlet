@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base::layout(~{::div}, ~{::script})">
+
+<div class="container d-flex flex-column flex-fill">
+    <h4 class="mb-0" th:text="#{users.heading}">Heading</h4>
+    <hr>
+    <form class="form-inline mb-2">
+        <label for="username" class="sr-only" th:text="#{base.username}">Label</label>
+        <input id="username" name="username" class="form-control form-control-sm mb-2 mb-sm-0 mr-sm-2" type="text" th:placeholder="#{base.username}">
+        <button class="btn btn-primary btn-sm" type="submit" th:text="#{base.search}">Button</button>
+    </form>
+    <div class="table-responsive flex-fill">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th th:text="#{base.username}">Username</th>
+                <th th:text="#{base.display-name}">Display name</th>
+                <th th:text="#{base.registration-date}">Registration date</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+    <nav>
+        <ul class="pagination pagination-sm justify-content-center m-0">
+        </ul>
+    </nav>
+</div>
+
+<script th:inline="javascript">
+    const PAGES_SHOWN = 5;
+
+    let username;
+    let page;
+
+    function updateUsers(users) {
+        let html = ``;
+
+        if (users.length == 0) {
+            html += `
+                <tr>
+                    <td colspan="3" class="text-center">[(#{users.no-users-found})]</td>
+                </tr>
+            `;
+        } else {
+            for (const user of users) html += `
+                <tr>
+                    <td><a href="[(@{/users})]/${user.username}">${user.username}</a></td>
+                    <td>${user.displayName}</td>
+                    <td>${user.registrationDate}</td>
+                </tr>
+            `;
+        }
+
+        $('body > .container tbody').html(html);
+    }
+
+    function updatePagination(pagination) {
+        const {page, totalPages} = pagination;
+        let start, end;
+
+        if (totalPages <= PAGES_SHOWN) {
+            start = 0;
+            end = Math.max(totalPages, 1);
+        } else {
+            start = Math.max(page - Math.floor(PAGES_SHOWN / 2), 0);
+            end = Math.min(start + PAGES_SHOWN, totalPages);
+        }
+
+        let html = ``;
+
+        html += `<li class="page-item${page > 0 ? '' : ' disabled'}"><a class="page-link" href="#" onclick="gotoPage(event, page - 1)">[(#{base.prev})]</a></li>`;
+        for (let i = start; i < end; i++) {
+            html += `<li class="page-item${i == page ? ' active' : ''}"><a class="page-link" href="#" onclick="gotoPage(event, ${i})">${i + 1}</a></li>`;
+        }
+        html += `<li class="page-item${page < totalPages - 1 ? '' : ' disabled'}"><a class="page-link" href="#" onclick="gotoPage(event, page + 1)">[(#{base.next})]</a></li>`;
+
+        $('body > .container ul').html(html);
+    }
+
+    function handleResult(obj) {
+        updateUsers(obj.users);
+        updatePagination(obj.pagination);
+        page = obj.pagination.page;
+    }
+
+    function doSearch() {
+        const params = {...(username && {username} || {}), page};
+        const url = '[(@{/users})]?' + new URLSearchParams(params).toString();
+        fetch(url, {headers: {'Accept': 'application/json'}})
+            .then(res => res.json())
+            .then(handleResult);
+    }
+
+    function gotoPage(event, newPage) {
+        event.preventDefault();
+        page = newPage;
+        doSearch();
+    }
+
+    $('body > .container form').submit(function (event) {
+        event.preventDefault();
+        username = event.target.username.value.trim();
+        page = 0;
+        doSearch();
+    });
+
+    page = 0;
+    doSearch();
+</script>
+
+</html>

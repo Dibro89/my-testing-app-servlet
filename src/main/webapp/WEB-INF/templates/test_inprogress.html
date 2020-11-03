@@ -2,13 +2,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base::layout(~{::div}, ~{::script})">
 
 <div class="container flex-fill">
-    <h4><span th:text="#{test.inprogress.heading}">Heading</span><span class="text-warning float-right">Text</span></h4>
+    <h4><span th:text="#{test.inprogress.heading(${test.name})}">Heading</span><span class="text-warning float-right" id="timer"></span></h4>
     <hr>
-    <form th:action="@{/tests/{testId}/end(testId=${test.id})}" method="POST">
+    <form th:action="@{'/tests/' + ${test.id}}" method="POST">
         <div class="row">
             <div class="col-md-8 col-lg-6 mx-auto">
                 <th:block th:each="question : ${test.questions}">
-                    <h5 th:text="|#{test.inprogress.question} ${questionStat.count}|">Heading</h5>
+                    <h5 th:text="#{test.inprogress.question(${questionStat.count})}">Heading</h5>
                     <p th:text="${question.text}">Paragraph</p>
                     <th:block th:unless="${question.multiple}">
                         <div class="custom-control custom-radio" th:each="option : ${question.options}">
@@ -31,5 +31,27 @@
         </div>
     </form>
 </div>
+
+<script th:inline="javascript">
+    const timer = $('#timer');
+
+    let seconds = Number('[(${test.duration * 60})]');
+
+    function update() {
+        if (seconds == 0) {
+            return;
+        }
+
+        seconds--;
+
+        const m = Math.floor(seconds / 60).toString().padStart(2, '0');
+        const s = (seconds % 60).toString().padStart(2, '0');
+
+        timer.text(`${m}:${s}`);
+    }
+
+    update();
+    setInterval(update, 1000);
+</script>
 
 </html>

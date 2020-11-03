@@ -23,15 +23,15 @@
                     <li class="nav-item">
                         <a class="nav-link" th:href="@{/users}" th:text="#{base.users}">Item</a>
                     </li>
-                    <li class="nav-item" th:if="${user}">
+                    <li class="nav-item" th:if="${user} != null">
                         <a class="nav-link" th:href="@{/users/{username}(username=${user.username})}" th:text="#{base.profile}">Item</a>
                     </li>
                 </ul>
-                <th:block th:unless="${user}">
+                <th:block th:if="${user} == null">
                     <a class="text-light ml-auto" th:href="@{/login}" th:text="#{base.log-in}">Link</a>
                     <a class="btn btn-outline-light btn-sm ml-2" role="button" th:href="@{/register}" th:text="#{base.sign-up}">Button</a>
                 </th:block>
-                <th:block th:if="${user}">
+                <th:block th:if="${user} != null">
                     <a class="text-light ml-auto" th:href="@{/logout}" th:text="#{base.log-out}">Link</a>
                 </th:block>
             </div>

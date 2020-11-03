@@ -14,12 +14,19 @@ dependencies {
     providedCompile 'javax.servlet:javax.servlet-api:4.0.1'
     implementation 'org.thymeleaf:thymeleaf:3.0.11.RELEASE'
     implementation 'com.fasterxml.jackson.core:jackson-databind:2.11.3'
+    implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.11.3'
     implementation 'com.h2database:h2:1.4.200'
     implementation 'com.zaxxer:HikariCP:3.4.5'
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
 }
 
 gretty {
     scanInterval = 0
     servletContainer = 'tomcat9'
     contextPath = '/'
+}
+
+test {
+    useJUnitPlatform()
 }

@@ -1,53 +1,52 @@
 package ua.training.mytestingapp.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.thymeleaf.ITemplateEngine;
 import org.thymeleaf.context.WebContext;
 import ua.training.mytestingapp.entity.User;
 import ua.training.mytestingapp.service.UserService;
 import ua.training.mytestingapp.util.PageInfo;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
-import java.util.Optional;
+import java.util.function.Predicate;
+import java.util.regex.Matcher;
 
-public class UsersController implements Controller {
+public class UsersController extends AbstractController {
 
     private final UserService userService;
+    private final ObjectMapper objectMapper;
 
-    public UsersController(UserService userService) {
+    public UsersController(UserService userService, ObjectMapper objectMapper) {
+        super("/users");
         this.userService = userService;
+        this.objectMapper = objectMapper;
     }
 
     @Override
-    public void process(
-        HttpServletRequest request,
-        HttpServletResponse response,
-        ServletContext servletContext,
-        ITemplateEngine templateEngine
-    ) throws Exception {
+    protected String processGet(HttpServletRequest request, WebContext ctx, Matcher matcher) {
+        String accept = request.getHeader("Accept");
 
-        String header = request.getHeader("Accept");
-        if (header.equals("application/json")) {
-            Optional<String> username = Optional.ofNullable(request.getParameter("username"));
-            int page = Optional.ofNullable(request.getParameter("page")).map(Integer::parseInt).orElse(0);
-
-            PageInfo<User> pageInfo = userService.getUserList(username, page);
-
-            ObjectMapper objectMapper = new ObjectMapper();
-            objectMapper.writeValue(response.getWriter(), Map.of(
-                "users", pageInfo.getData(),
-                "pagination", Map.of(
-                    "page", pageInfo.getPage(),
-                    "totalPages", pageInfo.getTotalPages()
-                )
-            ));
-            return;
+        if (accept == null || !accept.equals("application/json")) {
+            return "users";
         }
 
-        WebContext ctx = new WebContext(request, response, servletContext);
-        templateEngine.process("users", ctx, response.getWriter());
+        String username =
+            getOptionalParameter(request, "username")
+                .filter(Predicate.not(String::isBlank))
+                .orElse(null);
+
+        int page =
+            getOptionalIntParameter(request, "page")
+                .orElse(0);
+
+        PageInfo<User> result = userService.getUserList(username, page);
+
+        return responseBody(ctx.getResponse(), objectMapper, Map.of(
+            "users", result.getContent(),
+            "pagination", Map.of(
+                "page", result.getNumber(),
+                "totalPages", result.getTotalPages()
+            )
+        ));
     }
 }

@@ -5,7 +5,6 @@ import java.util.List;
 public class Question {
 
     private Long id;
-    private Long testId;
     private String text;
     private List<Option> options;
     private boolean multiple;
@@ -19,14 +18,6 @@ public class Question {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getTestId() {
-        return testId;
-    }
-
-    public void setTestId(Long testId) {
-        this.testId = testId;
     }
 
     public String getText() {

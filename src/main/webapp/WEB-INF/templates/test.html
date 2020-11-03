@@ -2,9 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base::layout(~{::div}, ~{::script})">
 
 <div class="container flex-fill">
-    <span class="float-right">
-        <a class="btn btn-danger btn-sm mr-2" role="button">Button</a>
-        <a class="btn btn-secondary btn-sm" role="button">Button</a>
+    <span class="float-right" th:if="${user.admin}">
+        <a class="btn btn-danger btn-sm mr-2" role="button" th:href="@{/tests/{testId}/delete(testId=${testInfo.id})}" th:text="#{test.delete}">Button</a>
+        <a class="btn btn-secondary btn-sm" role="button" th:href="@{/tests/{testId}/edit(testId=${testInfo.id})}" th:text="#{test.edit}">Button</a>
     </span>
     <h4 th:text="#{test.heading}">Heading</h4>
     <hr>
@@ -22,7 +22,7 @@
             </div>
             <div class="text-center">
                 <a class="btn btn-primary btn-sm" role="button"
-                   th:href="@{/tests/{testId}/begin(testId=${testInfo.id})}"
+                   th:href="@{'/tests/' + ${testInfo.id} + '?action=begin'}"
                    th:text="#{test.begin}">
                     Button
                 </a>

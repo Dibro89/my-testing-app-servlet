@@ -3,7 +3,6 @@ package ua.training.mytestingapp.entity;
 public class Option {
 
     private Long id;
-    private Long questionId;
     private String text;
     private boolean correct;
 
@@ -16,14 +15,6 @@ public class Option {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getQuestionId() {
-        return questionId;
-    }
-
-    public void setQuestionId(Long questionId) {
-        this.questionId = questionId;
     }
 
     public String getText() {

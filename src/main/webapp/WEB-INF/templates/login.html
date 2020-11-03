@@ -8,6 +8,7 @@
         <div class="row">
             <div class="col-md-6 col-lg-4 mx-auto">
                 <div class="alert alert-danger" role="alert" th:if="${param.error}" th:text="#{login.error}">Alert</div>
+                <div class="alert alert-danger" role="alert" th:if="${param.blocked}" th:text="#{login.blocked}">Alert</div>
                 <div class="alert alert-success" role="alert" th:if="${param.registered}" th:text="#{login.registered}">Alert</div>
                 <div class="form-group">
                     <label for="username" class="sr-only" th:text="#{base.username}">Label</label>

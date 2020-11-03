@@ -4,25 +4,25 @@ import java.util.List;
 
 public class PageInfo<T> {
 
-    private final int page;
+    private final List<T> content;
+    private final int number;
     private final int totalPages;
-    private final List<T> data;
 
-    public PageInfo(int page, int totalPages, List<T> data) {
-        this.page = page;
+    public PageInfo(List<T> content, int number, int totalPages) {
+        this.content = content;
+        this.number = number;
         this.totalPages = totalPages;
-        this.data = data;
     }
 
-    public int getPage() {
-        return page;
+    public List<T> getContent() {
+        return content;
+    }
+
+    public int getNumber() {
+        return number;
     }
 
     public int getTotalPages() {
         return totalPages;
-    }
-
-    public List<T> getData() {
-        return data;
     }
 }

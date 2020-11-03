@@ -6,16 +6,7 @@
     <hr>
     <div class="row">
         <div class="col-md-8 col-lg-6 mx-auto">
-            <div class="table-responsive">
-                <table class="table">
-                    <tbody>
-                    <tr th:each="entry : ${result}">
-                        <th th:text="#{|test.result.${entry.key}|}">Cell 1</th>
-                        <td th:text="${entry.value}">Cell 2</td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
+            <h4 class="text-center mb-5" th:text="#{test.result.processing}">Message</h4>
             <div class="text-center">
                 <a class="btn btn-primary btn-sm" role="button" th:href="@{/}" th:text="#{test.result.home}">Button</a>
             </div>

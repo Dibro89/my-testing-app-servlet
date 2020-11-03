@@ -2,36 +2,27 @@ package ua.training.mytestingapp.entity;
 
 public class Attempt {
 
-    private Long id;
-    private Long userId;
-    private Long testId;
+    private User user;
+    private Test test;
     private String score;
 
     public Attempt() {
     }
 
-    public Long getId() {
-        return id;
+    public User getUser() {
+        return user;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Test getTest() {
+        return test;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
-    }
-
-    public Long getTestId() {
-        return testId;
-    }
-
-    public void setTestId(Long testId) {
-        this.testId = testId;
+    public void setTest(Test test) {
+        this.test = test;
     }
 
     public String getScore() {

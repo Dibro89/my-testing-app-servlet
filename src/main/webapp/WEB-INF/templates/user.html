@@ -3,8 +3,19 @@
 
 <div class="container flex-fill">
     <span class="float-right">
-        <a class="btn btn-danger btn-sm" role="button" th:href="@{/users/{username}/block(username=${userInfo.username})}" th:text="#{user.block}">Button</a>
-        <a class="btn btn-secondary btn-sm" role="button" th:href="@{/users/{username}/edit(username=${userInfo.username})}" th:text="#{user.edit}">Button</a>
+        <th:block th:if="${canBlock}">
+            <a class="btn btn-danger btn-sm"
+               role="button"
+               th:unless="${blocked}"
+               th:href="@{/users/{username}/block(username=${userInfo.username})}"
+               th:text="#{user.block}">Button</a>
+            <a class="btn btn-success btn-sm"
+               role="button"
+               th:if="${blocked}"
+               th:href="@{/users/{username}/block(username=${userInfo.username})}"
+               th:text="#{user.unblock}">Button</a>
+        </th:block>
+        <a class="btn btn-secondary btn-sm" role="button" th:href="@{/users/{username}/edit(username=${userInfo.username})}" th:if="${canEdit}" th:text="#{user.edit}">Button</a>
     </span>
     <h4 th:text="#{user.heading}">Heading</h4>
     <hr>
@@ -12,7 +23,7 @@
     <table class="table table-sm user-information">
         <tbody>
         <tr th:each="entry : ${userInfo}">
-            <th th:text="#{|user.${entry.key}|}">Cell 1</th>
+            <th th:text="#{|base.${entry.key}|}">Cell 1</th>
             <td th:text="${entry.value}">Cell 2</td>
         </tr>
         </tbody>
@@ -23,7 +34,7 @@
         <table class="table table-striped">
             <thead>
             <tr>
-                <th th:text="#{user.attempt-test}">Column 1</th>
+                <th th:text="#{base.test}">Column 1</th>
                 <th th:text="#{user.attempt-score}">Column 2</th>
             </tr>
             </thead>

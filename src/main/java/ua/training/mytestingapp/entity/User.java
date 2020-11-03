@@ -1,18 +1,42 @@
 package ua.training.mytestingapp.entity;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 
 public class User {
+
+    public static final String ROLE_USER = "ROLE_USER";
+    public static final String ROLE_ADMIN = "ROLE_ADMIN";
 
     private Long id;
     private String username;
     private String password;
     private String displayName;
-    private boolean locked;
-    private boolean admin;
     private LocalDate registrationDate;
+    private Set<String> roles;
+    private boolean locked;
 
     public User() {
+    }
+
+    public void addRole(String role) {
+        if (roles == null) {
+            roles = new HashSet<>();
+        }
+        roles.add(role);
+    }
+
+    public boolean isAdmin() {
+        return roles != null && roles.contains(ROLE_ADMIN);
+    }
+
+    public void setAdmin(boolean admin) {
+        if (admin) {
+            addRole(ROLE_ADMIN);
+        } else if (roles != null) {
+            roles.remove(ROLE_ADMIN);
+        }
     }
 
     public Long getId() {
@@ -47,27 +71,27 @@ public class User {
         this.displayName = displayName;
     }
 
-    public boolean isLocked() {
-        return locked;
-    }
-
-    public void setLocked(boolean locked) {
-        this.locked = locked;
-    }
-
-    public boolean isAdmin() {
-        return admin;
-    }
-
-    public void setAdmin(boolean admin) {
-        this.admin = admin;
-    }
-
     public LocalDate getRegistrationDate() {
         return registrationDate;
     }
 
     public void setRegistrationDate(LocalDate registrationDate) {
         this.registrationDate = registrationDate;
+    }
+
+    public Set<String> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<String> roles) {
+        this.roles = roles;
+    }
+
+    public boolean isLocked() {
+        return locked;
+    }
+
+    public void setLocked(boolean locked) {
+        this.locked = locked;
     }
 }

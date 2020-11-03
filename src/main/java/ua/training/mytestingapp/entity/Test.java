@@ -7,10 +7,12 @@ public class Test {
 
     private Long id;
     private String name;
+    private String subject;
     private int duration;
     private int difficulty;
     private LocalDate creationDate;
     private List<Question> questions;
+    private List<Attempt> attempts;
 
     public Test() {
     }
@@ -29,6 +31,14 @@ public class Test {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSubject() {
+        return subject;
+    }
+
+    public void setSubject(String subject) {
+        this.subject = subject;
     }
 
     public int getDuration() {
@@ -61,5 +71,13 @@ public class Test {
 
     public void setQuestions(List<Question> questions) {
         this.questions = questions;
+    }
+
+    public List<Attempt> getAttempts() {
+        return attempts;
+    }
+
+    public void setAttempts(List<Attempt> attempts) {
+        this.attempts = attempts;
     }
 }

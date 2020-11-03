@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base::layout(~{::div}, ~{::script})">
 
 <div class="container d-flex flex-column flex-fill">
-    <h4 class="mb-0" th:text="#{users.heading}">Heading</h4>
+    <h4 class="mb-0" th:text="#{base.users}">Heading</h4>
     <hr>
     <form class="form-inline mb-2">
         <label for="username" class="sr-only" th:text="#{base.username}">Label</label>
@@ -14,8 +14,8 @@
             <thead>
             <tr>
                 <th th:text="#{base.username}">Username</th>
-                <th th:text="#{base.display-name}">Display name</th>
-                <th th:text="#{base.registration-date}">Registration date</th>
+                <th th:text="#{base.displayName}">Display name</th>
+                <th th:text="#{base.registrationDate}">Registration date</th>
             </tr>
             </thead>
             <tbody>
@@ -40,7 +40,7 @@
         if (users.length == 0) {
             html += `
                 <tr>
-                    <td colspan="3" class="text-center">[(#{users.no-users-found})]</td>
+                    <td colspan="3" class="text-center">[(#{base.no-users-found})]</td>
                 </tr>
             `;
         } else {

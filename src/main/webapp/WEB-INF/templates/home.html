@@ -2,7 +2,12 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org" th:replace="base::layout(~{::div}, ~{::script})">
 
 <div class="container d-flex flex-column flex-fill">
-    <h4 class="mb-0" th:text="#{home.heading}">Heading</h4>
+    <div>
+        <span class="float-right">
+            <a th:href="@{/tests/create}" th:if="${user} and ${user.admin}" th:text="#{home.create-test}">Button</a>
+        </span>
+        <h4 class="mb-0" th:text="#{home.heading}">Heading</h4>
+    </div>
     <hr>
     <h5 th:text="#{home.available-tests}">Heading</h5>
     <form class="form-inline mb-2">
@@ -29,15 +34,15 @@
                 This is item 2
             </option>
         </select>
-        <button class="btn btn-success btn-sm ml-sm-auto" type="submit" th:text="#{home.apply}">Button</button>
+        <button class="btn btn-success btn-sm ml-sm-auto" type="submit" th:text="#{base.apply}">Button</button>
     </form>
     <div class="table-responsive flex-fill">
         <table class="table table-striped">
             <thead>
             <tr>
-                <th th:text="#{home.test.name}">Column 1</th>
-                <th th:text="#{home.test.subject}">Column 2</th>
-                <th th:text="#{home.test.difficulty}">Column 2</th>
+                <th th:text="#{base.test}">Column 1</th>
+                <th th:text="#{base.subject}">Column 2</th>
+                <th th:text="#{base.difficulty}">Column 2</th>
             </tr>
             </thead>
             <tbody>

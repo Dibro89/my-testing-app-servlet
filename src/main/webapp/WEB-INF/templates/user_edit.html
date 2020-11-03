@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-md-6 col-lg-4 mx-auto">
                 <div class="alert alert-danger" role="alert" th:if="${errors}">
-                    <div th:each="error : ${new String[]{'username', 'password', 'displayName', 'username.exists'}}"
+                    <div th:each="error : ${new String[]{'username', 'password', 'displayName', 'username-exists'}}"
                          th:if="${#lists.contains(errors, error)}"
                          th:text="#{|user-edit.error.${error}|}">
                         Alert
@@ -19,8 +19,8 @@
                     <input id="username" name="username" class="form-control form-control-sm" type="text" th:placeholder="#{base.username}" th:value="${form.username}" autofocus="" required="">
                 </div>
                 <div class="form-group">
-                    <label for="display-name" class="sr-only" th:text="#{base.display-name}">Label</label>
-                    <input id="display-name" name="displayName" class="form-control form-control-sm" type="text" th:placeholder="#{base.display-name}" th:value="${form.displayName}" required="">
+                    <label for="display-name" class="sr-only" th:text="#{base.displayName}">Label</label>
+                    <input id="display-name" name="displayName" class="form-control form-control-sm" type="text" th:placeholder="#{base.displayName}" th:value="${form.displayName}" required="">
                 </div>
                 <div class="form-group">
                     <label for="password" class="sr-only" th:text="#{base.password}">Label</label>
@@ -32,7 +32,7 @@
                 </div>
                 <div class="form-group" th:if="${targetUser} and ${user.admin}">
                     <div class="custom-control custom-switch">
-                        <input class="custom-control-input" type="checkbox" id="is-admin" name="is-admin" th:checked="${targetUser.admin}">
+                        <input class="custom-control-input" type="checkbox" id="is-admin" name="admin" th:checked="${targetUser.admin}">
                         <label class="custom-control-label" for="is-admin" th:text="#{user-edit.is-admin}">Label</label>
                     </div>
                 </div>
